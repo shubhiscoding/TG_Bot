@@ -1,0 +1,29 @@
+{
+    "id": "c64c8b23-2983-4852-909d-9ad918def5e5",
+    "title": "Add your details to the readme file.",
+    "externalUrl": "https://github.com/gibwork/web3-devs/issues/267",
+    "overview": "<p>Add your details to the readme file, must not have already participated. </p>",
+    "requirements": "<ul><li><p>cannot be a recently created GitHub account</p></li></ul>",
+    "endsAt": "2024-07-19T04:00:00.000Z",
+    "type": "Bounty",
+    "videoUrl": "https://static.vecteezy.com/system/resources/previews/026/432/321/mp4/animation-of-an-atomic-bomb-explosion-with-dark-smoke-and-bright-lights-2d-atomic-bomb-animation-background-4k-animation-free-video.mp4",
+    "tags": [
+        "HTML"
+    ],
+    "createdAt": "2024-07-19T13:19:49.980Z",
+    "user": {
+        "id": "",
+        "externalId": "",
+        "username": "anthony",
+        "profilePicture": "https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvdXBsb2FkZWQvaW1nXzJqTVlqeUxDN1FVYWc5YWZSM0RYaXV1TXlkMyJ9"
+    },
+    "asset": {
+        "id": "",
+        "mintAddress": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+        "symbol": "USDC",
+        "imageUrl": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+        "amount": "10000000",
+        "price": 10,
+        "decimals": 6
+    }
+}

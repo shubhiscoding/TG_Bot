@@ -1,0 +1,27 @@
+{
+    "id": "13f976c8-2eb6-45f4-bb28-a62db1281c1a",
+    "title": "Create A FAQ List for Gibwork",
+    "content": "<p>The FAQ list aims to provide clear and concise answers to potential questions that users may have about using our platform.<br><br>The FAQ should cover a wide range of topics including but not limited to:</p><ul><li><p>Registration and account setup</p></li><li><p>Creating new bounties, questions, and tasks.</p></li><li><p>Submitting work on bounties, questions, and tasks.</p></li><li><p>Payment and transaction processes<br></p></li></ul><p>Coordinate with the team to gather necessary insights on Discord: <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://discord.gg/dhTszYHckD\">https://discord.gg/dhTszYHckD</a></p>",
+    "requirements": "<ul><li><p>Ensure each question is phrased clearly and concisely.</p></li><li><p>Answers should be informative and easy to understand.</p></li><li><p>Include relevant links or references to detailed guides or support resources where applicable.</p></li><li><p>Attention to detail and accuracy is important.</p></li></ul>",
+    "videoUrl": "https://static.vecteezy.com/system/resources/previews/026/432/321/mp4/animation-of-an-atomic-bomb-explosion-with-dark-smoke-and-bright-lights-2d-atomic-bomb-animation-background-4k-animation-free-video.mp4",
+    "type": "Task",
+    "tags": [
+        "Misc"
+    ],
+    "createdAt": "2024-07-24T15:33:20.241Z",
+    "user": {
+        "id": "",
+        "externalId": "",
+        "username": "anthony",
+        "profilePicture": "https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvdXBsb2FkZWQvaW1nXzJqTVlqeUxDN1FVYWc5YWZSM0RYaXV1TXlkMyJ9"
+    },
+    "asset": {
+        "id": "",
+        "mintAddress": "So11111111111111111111111111111111111111112",
+        "symbol": "SOL",
+        "imageUrl": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
+        "amount": "1000000000",
+        "price": 179.053068857,
+        "decimals": 9
+    }
+}
