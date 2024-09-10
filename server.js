@@ -29,13 +29,14 @@ const sendTelegramMessage = async (text, videoUrl) => {
 };
 
 
-const queue_url = process.env.MY_SQS;
+const Task_Created_Queue_url = process.env.MY_TASK_CREATED_SQS;
+const Task_Paid_Queue_url = process.env.MY_TASK_PAID_SQS;
 const sqsClient = new SQSClient({
-    endpoint: "http://localhost:4566", // LocalStack endpoint
+    endpoint: "http://localhost:4566",
     region: "us-west-2",
 });
 
-async function receiveAndProcessSQSMessage() {
+async function receiveAndProcessSQSMessage(queue_url) {
     try {
         const receiveMessageCommand = new ReceiveMessageCommand({
             QueueUrl: queue_url,
@@ -71,6 +72,7 @@ async function receiveAndProcessSQSMessage() {
     }
 }
 
+// Create Message for Task Created
 function parseTask(response){
     const amount = parseFloat(response.asset.amount);
     const decimals = response.asset.decimals || 0;
@@ -78,12 +80,14 @@ function parseTask(response){
     let roundedAmount = amnt.toFixed(2);
 
     return `🚨 New Task Alert: ${response['title']}! 🚨\n
-📝 Overview: ${convertHtmlToText(response.content)}\n
-requirements: 
+📝 Task Overview:\n
+${convertHtmlToText(response.content)}\n
+✅ Requirements:\n 
 ${convertHtmlToText(response.requirements)}\n
-💰 Reward: ${roundedAmount}${response.asset.symbol} (~${response.asset.price.toFixed(2)})`;
+💰 Reward: ${roundedAmount}${response.asset.symbol} (~$${response.asset.price.toFixed(2)})`;
 }
 
+// Create Message for Bounty Created
 function parseBounty(response){
     const amount = parseFloat(response.asset.amount);
     const decimals = response.asset.decimals || 0;
@@ -91,21 +95,47 @@ function parseBounty(response){
     let roundedAmount = amnt.toFixed(2);
     let str = `🚨 New Bounty Alert: ${response['title']}! 🚨\n
 📝 Overview: ${convertHtmlToText(response.overview)}\n
-requirements: 
+requirements:
 ${convertHtmlToText(response.requirements)}\n
 📅 Deadline: ${new Date(response.endsAt)}\n
 💰 Reward: ${roundedAmount}${response.asset.symbol} (~${response.asset.price.toFixed(2)})`;
     return str;
 }
 
+// Create Message for Task Paid (Waiting for Task Paid Payload)
+
 function convertHtmlToText(htmlString) {
     const $ = cheerio.load(htmlString);
-    return $.text();
+
+    $('br').replaceWith('\n');
+
+    $('p').each(function () {
+        $(this).append('\n');
+    });
+
+    $('ul').each(function () {
+        const listItems = $(this).find('li');
+        listItems.each(function () {
+            const listItemText = $(this).text().trim();
+            $(this).text(`• ${listItemText}\n`);
+        });
+    });
+
+    $('ol').each(function () {
+        const listItems = $(this).find('li');
+        listItems.each(function (index) {
+            const listItemText = $(this).text().trim();
+            $(this).text(`${index + 1}. ${listItemText}\n`);
+        });
+    });
+
+    return $.text().trim();
 }
 
 function pollMessages() {
     setInterval(() => {
-        receiveAndProcessSQSMessage();
+        receiveAndProcessSQSMessage(Task_Created_Queue_url);
+        receiveAndProcessSQSMessage(Task_Paid_Queue_url);
     }, 5000);
 }
 
