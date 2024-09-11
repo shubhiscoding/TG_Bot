@@ -1,0 +1,30 @@
+{
+    "videoUrl": "https://static.vecteezy.com/system/resources/previews/026/432/321/mp4/animation-of-an-atomic-bomb-explosion-with-dark-smoke-and-bright-lights-2d-atomic-bomb-animation-background-4k-animation-free-video.mp4",
+    "task": {
+      "id": "dec9e7e8-9b28-4b41-bb2c-332dee65e790",
+      "title": "test",
+      "content": "test",
+      "requirements": "test",
+      "tags": ["Feedback"]
+    },
+    "submission": {
+      "content": "test",
+      "status": "OPEN",
+      "createdBy": "7b7dd6fc-c154-4d86-a848-017d4e5d1c1a",
+      "createdAt": "2024-09-11T15:55:13.614Z",
+      "user": {
+        "id": "",
+        "externalId": "",
+        "username": "red",
+        "profilePicture": "https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18yZmR2M2NOVFJpeGI2UkphZmRSb3dRemVHWXciLCJyaWQiOiJ1c2VyXzJqbFVENXFqMGhNQkdneEpPT05PejZCTWZUMCIsImluaXRpYWxzIjoiVlYifQ"
+      },
+      "asset": {
+        "amount": 500000,
+        "mintAddress": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+        "symbol": "USDT",
+        "imageUrl": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
+        "decimals": 6,
+        "price": 0.5000485
+      }
+    }
+  }

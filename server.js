@@ -40,7 +40,7 @@ const sqsClient = new SQSClient({
     },
 });
 
-async function receiveAndProcessSQSMessage(queue_url) {
+async function receiveAndProcessSQSMessage(queue_url, type) {
     try {
         const receiveMessageCommand = new ReceiveMessageCommand({
             QueueUrl: queue_url,
@@ -56,12 +56,12 @@ async function receiveAndProcessSQSMessage(queue_url) {
             const response = JSON.parse(message.Body);
 
             let MessageToUser;
-            if(response.type === 'Task'){
+            if(type === 'CreateTask'){
                 MessageToUser = parseTask(response);
-            }else if(response.type === 'Bounty'){
-                MessageToUser = parseBounty(response);
+            }else if(type === 'TaskPaid'){
+                MessageToUser = parseTaskPaid(response);
             }
-
+            let videoUrl = response.videoUrl;
             await sendTelegramMessage(MessageToUser, response.videoUrl);
 
             const deleteMessageCommand = new DeleteMessageCommand({
@@ -107,6 +107,17 @@ ${convertHtmlToText(response.requirements)}\n
 }
 
 // Create Message for Task Paid (Waiting for Task Paid Payload)
+function parseTaskPaid(response){
+    const amount = parseFloat(response.submission.asset.amount);
+    const decimals = response.submission.asset.decimals || 0;
+    let amnt = amount / (10 ** decimals);
+    let roundedAmount = amnt.toFixed(2);
+    
+    return `🎉 ${response.submission.user.username} Just Got Paid! 🎉\n 🎯 Task: ${response.task.title}\n
+📝Description: ${response.task.content}\n
+💵 Payment Details:\n
+Amount: ${roundedAmount}${response.submission.asset.symbol} (~$${response.submission.asset.price.toFixed(2)})\n`
+}
 
 function convertHtmlToText(htmlString) {
     const $ = cheerio.load(htmlString);
@@ -138,8 +149,8 @@ function convertHtmlToText(htmlString) {
 
 function pollMessages() {
     setInterval(() => {
-        receiveAndProcessSQSMessage(Task_Created_Queue_url);
-        receiveAndProcessSQSMessage(Task_Paid_Queue_url);
+        receiveAndProcessSQSMessage(Task_Created_Queue_url, 'CreateTask');
+        receiveAndProcessSQSMessage(Task_Paid_Queue_url, 'TaskPaid');
     }, 5000);
 }
 pollMessages();
