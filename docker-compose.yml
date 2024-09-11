@@ -19,8 +19,7 @@ services:
   telegram-bot:
     image: telegram-bot:latest
     container_name: "telegram_bot"
-    env_file:
-      - .env
+
     environment:
       - MY_TOKEN=${MY_TOKEN}
       - MY_CHAT_ID=${MY_CHAT_ID}
