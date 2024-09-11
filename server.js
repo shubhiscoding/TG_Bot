@@ -32,8 +32,12 @@ const sendTelegramMessage = async (text, videoUrl) => {
 const Task_Created_Queue_url = process.env.MY_TASK_CREATED_SQS;
 const Task_Paid_Queue_url = process.env.MY_TASK_PAID_SQS;
 const sqsClient = new SQSClient({
-    endpoint: "http://localhost:4566",
+    endpoint: "http://localstack:4566",
     region: "us-west-2",
+    credentials: {
+        accessKeyId: 'test',
+        secretAccessKey: 'test',
+    },
 });
 
 async function receiveAndProcessSQSMessage(queue_url) {
@@ -138,5 +142,4 @@ function pollMessages() {
         receiveAndProcessSQSMessage(Task_Paid_Queue_url);
     }, 5000);
 }
-
 pollMessages();

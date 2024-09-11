@@ -5,9 +5,32 @@ services:
     container_name: "localstack_main"
     image: localstack/localstack
     ports:
-      - "127.0.0.1:4566:4566"
+      - "4566:4566"
     environment:
       - DEBUG=${DEBUG:-0}
+      - SERVICES=sqs
+      - DEFAULT_REGION=us-west-2
     volumes:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - app-network
+
+  telegram-bot:
+    image: telegram-bot:latest
+    container_name: "telegram_bot"
+    env_file:
+      - .env
+    environment:
+      - MY_TOKEN=${MY_TOKEN}
+      - MY_CHAT_ID=${MY_CHAT_ID}
+      - MY_TASK_CREATED_SQS=${MY_TASK_CREATED_SQS}
+      - MY_TASK_PAID_SQS=${MY_TASK_PAID_SQS}
+    depends_on:
+      - localstack
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
