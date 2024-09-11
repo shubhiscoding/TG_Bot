@@ -17,3 +17,5 @@ Run the docker Image:
 ```
 docker compose up
 ```
+
+NOTE: The project is meant to be used with localStack and hence the docker-compose.yml is configured with details of localStack.
