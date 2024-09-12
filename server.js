@@ -56,13 +56,15 @@ async function receiveAndProcessSQSMessage(queue_url, type) {
             const response = JSON.parse(message.Body);
 
             let MessageToUser;
+            let videoUrl;
             if(type === 'CreateTask'){
                 MessageToUser = parseTask(response);
+                videoUrl = process.env.TASK_CREATED_VIDEO_URL;
             }else if(type === 'TaskPaid'){
                 MessageToUser = parseTaskPaid(response);
+                videoUrl = process.env.TASK_PAID_VIDEO_URL
             }
-            let videoUrl = response.videoUrl;
-            await sendTelegramMessage(MessageToUser, response.videoUrl);
+            await sendTelegramMessage(MessageToUser, videoUrl);
 
             const deleteMessageCommand = new DeleteMessageCommand({
                 QueueUrl: queue_url,
