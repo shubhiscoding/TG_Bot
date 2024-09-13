@@ -28,7 +28,7 @@ const sendTelegramMessage = async (text, videoUrl, linkUrl = null) => {
             inline_keyboard: [
                 [
                     {
-                        text: "🔗Task", // Button text
+                        text: "🔗Go To Task", // Button text
                         url: linkUrl // URL to redirect to when clicked
                     }
                 ]
@@ -81,7 +81,7 @@ async function receiveAndProcessSQSMessage(queue_url, type) {
             }else if(type === 'TaskPaid'){
                 MessageToUser = parseTaskPaid(response);
                 videoUrl = process.env.TASK_PAID_VIDEO_URL
-                await sendTelegramMessage(MessageToUser, videoUrl);
+                await sendTelegramMessage(MessageToUser, videoUrl, process.env.TASK_BASE_URL + response.task.id);
             }
 
             const deleteMessageCommand = new DeleteMessageCommand({
@@ -128,7 +128,7 @@ function parseTaskPaid(response){
     let amnt = amount / (10 ** decimals);
     let roundedAmount = amnt.toFixed(2);
     
-    return `🎉 ${response.submission.user.username} Just Got Paid! 🎉\n 🎯 Task: ${response.task.title}`
+    return `🎉 ${response.submission.user.username} Just Got Paid! 🎉\n \n🎯 Task: ${response.task.title}`
 }
 
 function convertHtmlToText(htmlString) {
