@@ -4,6 +4,7 @@
     "content": "<p>The FAQ list aims to provide clear and concise answers to potential questions that users may have about using our platform.<br><br>The FAQ should cover a wide range of topics including but not limited to:</p><ul><li><p>Registration and account setup</p></li><li><p>Creating new bounties, questions, and tasks.</p></li><li><p>Submitting work on bounties, questions, and tasks.</p></li><li><p>Payment and transaction processes<br></p></li></ul><p>Coordinate with the team to gather necessary insights on Discord: <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://discord.gg/dhTszYHckD\">https://discord.gg/dhTszYHckD</a></p>",
     "requirements": "<ul><li><p>Ensure each question is phrased clearly and concisely.</p></li><li><p>Answers should be informative and easy to understand.</p></li><li><p>Include relevant links or references to detailed guides or support resources where applicable.</p></li><li><p>Attention to detail and accuracy is important.</p></li></ul>",
     "type": "Task",
+    "taskUrl": "https://app.gib.work/tasks",
     "tags": [
         "Misc"
     ],

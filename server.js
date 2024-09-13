@@ -84,13 +84,9 @@ function parseTask(response){
     const decimals = response.asset.decimals || 0;
     let amnt = amount / (10 ** decimals);
     let roundedAmount = amnt.toFixed(2);
-
     return `🚨 New Task Alert: ${response['title']}! 🚨\n
-📝 Task Overview:\n
-${convertHtmlToText(response.content)}\n
-✅ Requirements:\n 
-${convertHtmlToText(response.requirements)}\n
-💰 Reward: ${roundedAmount}${response.asset.symbol} (~$${response.asset.price.toFixed(2)})`;
+💰 Reward: ${roundedAmount}${response.asset.symbol} (~$${response.asset.price.toFixed(2)})\n
+🔗Task: ${response.taskUrl}\n`;
 }
 
 // Create Message for Bounty Created
