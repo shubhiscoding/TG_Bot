@@ -86,7 +86,7 @@ function parseTask(response){
     let roundedAmount = amnt.toFixed(2);
     return `🚨 New Task Alert: ${response['title']}! 🚨\n
 💰 Reward: ${roundedAmount}${response.asset.symbol} (~$${response.asset.price.toFixed(2)})\n
-🔗Task: ${response.taskUrl}\n`;
+🔗Task: ${process.env.TASK_BASE_URL + response.id}\n`;
 }
 
 // Create Message for Bounty Created
@@ -112,7 +112,7 @@ function parseTaskPaid(response){
     let roundedAmount = amnt.toFixed(2);
     
     return `🎉 ${response.submission.user.username} Just Got Paid! 🎉\n 🎯 Task: ${response.task.title}\n
-📝Description: ${response.task.content}\n
+📝Description: ${convertHtmlToText(response.task.content)}\n
 💵 Payment Details:\n
 Amount: ${roundedAmount}${response.submission.asset.symbol} (~$${response.submission.asset.price.toFixed(2)})\n`
 }

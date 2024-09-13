@@ -2,7 +2,7 @@
     "task": {
       "id": "dec9e7e8-9b28-4b41-bb2c-332dee65e790",
       "title": "test",
-      "content": "test",
+      "content": "<p>Create an account on <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://url.pizza\">https://url.pizza</a></p><p>The ultimate link in bio tool! 🍕</p>",      
       "requirements": "test",
       "tags": ["Feedback"]
     },
