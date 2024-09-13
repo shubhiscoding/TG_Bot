@@ -12,16 +12,33 @@ dotenv.config();
 const TELEGRAM_TOKEN = process.env.MY_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.MY_CHAT_ID;
 
-const sendTelegramMessage = async (text, videoUrl) => {
+const sendTelegramMessage = async (text, videoUrl, linkUrl = null) => {
     const apiUrl = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendVideo`;
 
+    // Prepare the payload
+    const payload = {
+        chat_id: TELEGRAM_CHAT_ID,
+        video: videoUrl,
+        caption: text,
+    };
+
+    // If a link is provided, add an inline keyboard with the button
+    if (linkUrl) {
+        payload.reply_markup = {
+            inline_keyboard: [
+                [
+                    {
+                        text: "🔗Task", // Button text
+                        url: linkUrl // URL to redirect to when clicked
+                    }
+                ]
+            ]
+        };
+    }
+
     try {
-        await axios.post(apiUrl, {
-            chat_id: TELEGRAM_CHAT_ID,
-            video: videoUrl,
-            caption: text,
-        });
-        console.log("Photo with text sent to Telegram successfully!");
+        await axios.post(apiUrl, payload);
+        console.log("Video with text and button sent to Telegram successfully!");
 
     } catch (error) {
         console.error("Error sending message to Telegram:", error);
@@ -60,11 +77,12 @@ async function receiveAndProcessSQSMessage(queue_url, type) {
             if(type === 'CreateTask'){
                 MessageToUser = parseTask(response);
                 videoUrl = process.env.TASK_CREATED_VIDEO_URL;
+                await sendTelegramMessage(MessageToUser, videoUrl, process.env.TASK_BASE_URL + response.id);
             }else if(type === 'TaskPaid'){
                 MessageToUser = parseTaskPaid(response);
                 videoUrl = process.env.TASK_PAID_VIDEO_URL
+                await sendTelegramMessage(MessageToUser, videoUrl);
             }
-            await sendTelegramMessage(MessageToUser, videoUrl);
 
             const deleteMessageCommand = new DeleteMessageCommand({
                 QueueUrl: queue_url,
@@ -85,8 +103,7 @@ function parseTask(response){
     let amnt = amount / (10 ** decimals);
     let roundedAmount = amnt.toFixed(2);
     return `🚨 New Task Alert: ${response['title']}! 🚨\n
-💰 Reward: ${roundedAmount}${response.asset.symbol} (~$${response.asset.price.toFixed(2)})\n
-🔗Task: ${process.env.TASK_BASE_URL + response.id}\n`;
+💰 Reward: ${roundedAmount}${response.asset.symbol} (~$${response.asset.price.toFixed(2)})`;
 }
 
 // Create Message for Bounty Created
@@ -111,10 +128,7 @@ function parseTaskPaid(response){
     let amnt = amount / (10 ** decimals);
     let roundedAmount = amnt.toFixed(2);
     
-    return `🎉 ${response.submission.user.username} Just Got Paid! 🎉\n 🎯 Task: ${response.task.title}\n
-📝Description: ${convertHtmlToText(response.task.content)}\n
-💵 Payment Details:\n
-Amount: ${roundedAmount}${response.submission.asset.symbol} (~$${response.submission.asset.price.toFixed(2)})\n`
+    return `🎉 ${response.submission.user.username} Just Got Paid! 🎉\n 🎯 Task: ${response.task.title}`
 }
 
 function convertHtmlToText(htmlString) {
